@@ -1,11 +1,11 @@
 import { Some } from "./Some";
 import { None } from "./None";
-import { Maybe } from "./types";
+import { MaybeFactory } from "./types";
 
-export function maybeBoolean<T>(value: boolean | T): Maybe<boolean> {
+export const maybeBoolean: MaybeFactory<boolean> = (value) => {
   if (typeof value === "boolean") {
     return new Some(value);
   } else {
     return new None();
   }
-}
+};

@@ -5,7 +5,8 @@ import { maybeNumber } from "./maybeNumber";
 import { maybeString } from "./maybeString";
 import { maybeArrayOf } from "./maybeArrayOf";
 import { maybeShape } from "./maybeShape";
-import { Maybe } from "./types";
+import { Maybe, MaybeFactory } from "./types";
+import { nullable } from "./nullable";
 
 export const boolean = maybeBoolean;
 export const number = maybeNumber;
@@ -13,27 +14,17 @@ export const string = maybeString;
 export const arrayOf = maybeArrayOf;
 export const shape = maybeShape;
 
-export function nullable<TValue>(maybeValue: (value: unknown) => TValue) {
-  return (value: unknown): TValue | Some<null> => {
-    if (value == null) {
-      return new Some(null);
-    }
-
-    return maybeValue(value);
-  };
-}
-
 export namespace optional {
   export const boolean = nullable(maybeBoolean);
   export const number = nullable(maybeNumber);
   export const string = nullable(maybeString);
 
-  export const arrayOf = <TValue>(schema: (value: any) => Maybe<TValue>) =>
-    nullable(maybeArrayOf(schema));
+  export const arrayOf = <TValue>(factory: MaybeFactory<TValue>) =>
+    nullable(maybeArrayOf(factory));
 }
 
 export namespace coercible {
-  export function date(value: unknown): Maybe<Date> {
+  export const date: MaybeFactory<Date> = (value) => {
     if (value instanceof Date) {
       return new Some(value);
     }
@@ -43,9 +34,9 @@ export namespace coercible {
     }
 
     return new None();
-  }
+  };
 
-  export function number(value: unknown): Maybe<number> {
+  export const number: MaybeFactory<number> = (value) => {
     if (typeof value === "number") {
       return new Some(value);
     }
@@ -55,5 +46,5 @@ export namespace coercible {
     }
 
     return new None();
-  }
+  };
 }

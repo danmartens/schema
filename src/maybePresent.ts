@@ -2,6 +2,14 @@ import { Some } from "./Some";
 import { None } from "./None";
 import { Maybe } from "./types";
 
+export function maybePresent<T>(value: T): Maybe<T> {
+  if (isPresent(value)) {
+    return new Some(value);
+  } else {
+    return new None();
+  }
+}
+
 const isPresent = (value: any): boolean => {
   if (value == null) {
     return false;
@@ -21,11 +29,3 @@ const isPresent = (value: any): boolean => {
 
   return true;
 };
-
-export function maybePresent<T>(value: T): Maybe<T> {
-  if (isPresent(value)) {
-    return new Some(value);
-  } else {
-    return new None();
-  }
-}

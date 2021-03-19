@@ -1,11 +1,11 @@
 import { Some } from "./Some";
 import { None } from "./None";
-import { Maybe } from "./types";
+import { MaybeFactory } from "./types";
 
-export function maybeString(value: unknown): Maybe<string> {
+export const maybeString: MaybeFactory<string> = (value) => {
   if (typeof value === "string") {
     return new Some(value);
   } else {
     return new None();
   }
-}
+};

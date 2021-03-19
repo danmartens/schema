@@ -1,3 +1,7 @@
+import * as schema from "./schema";
+
+schema.coercible.number("20").orThrow();
+
 import { Maybe } from "./types";
 
 function validate<TValue>(
