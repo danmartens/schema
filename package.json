@@ -1,6 +1,6 @@
 {
   "name": "schema",
-  "description": "Composable, type-safe data validation and normalization.",
+  "description": "Composable, type-safe data validation and normalization",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -8,6 +8,7 @@
     "@babel/core": "^7.13.10",
     "@babel/preset-env": "^7.13.10",
     "@babel/preset-typescript": "^7.13.0",
+    "@types/jest": "^26.0.21",
     "babel-jest": "^26.6.3",
     "jest": "^26.6.3",
     "typescript": "^4.2.3"

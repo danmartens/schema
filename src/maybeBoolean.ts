@@ -6,6 +6,6 @@ export const maybeBoolean: MaybeFactory<boolean> = (value) => {
   if (typeof value === "boolean") {
     return new Some(value);
   } else {
-    return new None();
+    return new None(() => "Expected value to match Some<Boolean>");
   }
 };

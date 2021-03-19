@@ -5,7 +5,7 @@ import { maybeNumber } from "./maybeNumber";
 import { maybeString } from "./maybeString";
 import { maybeArrayOf } from "./maybeArrayOf";
 import { maybeShape } from "./maybeShape";
-import { Maybe, MaybeFactory } from "./types";
+import { MaybeFactory } from "./types";
 import { nullable } from "./nullable";
 
 export const boolean = maybeBoolean;

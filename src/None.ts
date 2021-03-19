@@ -1,4 +1,6 @@
 export class None {
+  constructor(private message: () => string | undefined = () => undefined) {}
+
   map(): None {
     return this;
   }
@@ -11,8 +13,10 @@ export class None {
     return value;
   }
 
-  orThrow(message?: string): never {
-    throw new Error(message ?? "Value does not match expected type");
+  orThrow(): never {
+    const message = this.message();
+
+    throw new Error(message ?? "Expected value to match Some<unknown>");
   }
 
   orNull() {

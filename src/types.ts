@@ -8,7 +8,10 @@ export type Maybe<T> = Some<T> | None;
  */
 export type MaybeType<T> = T extends Some<infer V> ? V : never;
 
-export type MaybeFactory<T> = (value: unknown) => Maybe<T>;
+export type MaybeFactory<T> = (
+  value: unknown,
+  message?: (value: unknown) => string
+) => Maybe<T>;
 
 export type Schema<T extends { [key: string]: any }> = {
   [K in keyof T]: (value: any) => Some<T[K]> | None;
@@ -20,3 +23,5 @@ export type Schema<T extends { [key: string]: any }> = {
 export type SchemaType<T> = T extends Schema<infer S> ? S : never;
 
 export type ConstantValue = string | number;
+
+export type MessageFactory = (value: unknown) => () => string | undefined;
