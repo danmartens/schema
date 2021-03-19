@@ -18,4 +18,8 @@ export class None {
   orNull() {
     return null;
   }
+
+  valueOf() {
+    return undefined;
+  }
 }

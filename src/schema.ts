@@ -10,9 +10,27 @@ import { Maybe } from "./types";
 export const boolean = maybeBoolean;
 export const number = maybeNumber;
 export const string = maybeString;
-
 export const arrayOf = maybeArrayOf;
 export const shape = maybeShape;
+
+export function nullable<TValue>(maybeValue: (value: unknown) => TValue) {
+  return (value: unknown): TValue | Some<null> => {
+    if (value == null) {
+      return new Some(null);
+    }
+
+    return maybeValue(value);
+  };
+}
+
+export namespace optional {
+  export const boolean = nullable(maybeBoolean);
+  export const number = nullable(maybeNumber);
+  export const string = nullable(maybeString);
+
+  export const arrayOf = <TValue>(schema: (value: any) => Maybe<TValue>) =>
+    nullable(maybeArrayOf(schema));
+}
 
 export namespace coercible {
   export function date(value: unknown): Maybe<Date> {
@@ -39,22 +57,3 @@ export namespace coercible {
     return new None();
   }
 }
-
-export function optional<TValue, TResult>(
-  maybeValue: (value: TValue) => TResult
-) {
-  return (value: TValue | null | undefined): TResult | Some<null> => {
-    if (value == null) {
-      return new Some(null);
-    }
-
-    return maybeValue(value);
-  };
-}
-
-export const optionalNumber = optional(number);
-export const optionalCoercibleNumber = optional(coercible.number);
-
-export const optionalBoolean = optional(boolean);
-
-export const optionalString = optional(string);
