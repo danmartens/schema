@@ -4,17 +4,15 @@ import { Maybe } from "./types";
 
 export function all<A>(values: [Maybe<A>]): Maybe<A>;
 
-export function all<A, B>(
-  values: [Maybe<A>, Maybe<B>]
-): Some<[A, B]> | None<any>;
+export function all<A, B>(values: [Maybe<A>, Maybe<B>]): Maybe<[A, B]>;
 
 export function all<A, B, C>(
   values: [Maybe<A>, Maybe<B>, Maybe<C>]
-): Some<[A, B, C]> | None<any>;
+): Maybe<[A, B, C]>;
 
 export function all<A, B, C>(
   values: [Maybe<A>] | [Maybe<A>, Maybe<B>] | [Maybe<A>, Maybe<B>, Maybe<C>]
-): Some<[A]> | Some<[A, B]> | Some<[A, B, C]> | None<any> {
+): Maybe<[A]> | Maybe<[A, B]> | Maybe<[A, B, C]> {
   const result = [];
 
   for (const value of values) {

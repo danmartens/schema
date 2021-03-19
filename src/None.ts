@@ -1,9 +1,9 @@
-export class None<T> {
-  map(): None<T> {
+export class None {
+  map(): None {
     return this;
   }
 
-  flatMap(): None<T> {
+  flatMap(): None {
     return this;
   }
 

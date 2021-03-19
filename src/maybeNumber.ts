@@ -1,10 +1,11 @@
 import { Some } from "./Some";
 import { None } from "./None";
+import { Maybe } from "./types";
 
-export function maybeNumber<T>(value: number | T): Some<number> | None<T> {
+export function maybeNumber(value: unknown): Maybe<number> {
   if (typeof value === "number") {
     return new Some(value);
   } else {
-    return new None<T>();
+    return new None();
   }
 }

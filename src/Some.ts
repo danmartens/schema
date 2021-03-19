@@ -1,9 +1,10 @@
 import { None } from "./None";
+import { Maybe } from "./types";
 
 export class Some<T> {
   constructor(private value: T) {}
 
-  map<R>(callbackFn: (wrapped: T) => R): Some<R> | None<R> {
+  map<R>(callbackFn: (wrapped: T) => R): Maybe<R> {
     const result = callbackFn(this.value);
 
     if (result != null) {
@@ -13,7 +14,7 @@ export class Some<T> {
     }
   }
 
-  flatMap<R>(callbackFn: (wrapped: T) => Some<R> | None<R>) {
+  flatMap<R>(callbackFn: (wrapped: T) => Maybe<R>) {
     return callbackFn(this.value);
   }
 

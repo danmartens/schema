@@ -19,7 +19,7 @@ export function maybeArrayOf<
 
   return (value: any): Maybe<TValue[]> => {
     if (!Array.isArray(value)) {
-      return new None<TValue[]>();
+      return new None();
     }
 
     if (cache.has(value)) {
@@ -28,7 +28,7 @@ export function maybeArrayOf<
 
     for (const item of value) {
       if (schema(item) instanceof None) {
-        return cacheResult(value, new None<TValue[]>());
+        return cacheResult(value, new None());
       }
     }
 

@@ -16,7 +16,7 @@ export function maybeShape<
 
   return (value: any): Maybe<TValue> => {
     if (value == null || typeof value !== "object") {
-      return new None<SchemaType<TSchema>>();
+      return new None();
     }
 
     if (cache.has(value)) {
@@ -30,7 +30,7 @@ export function maybeShape<
       const result = maybeValue(value[key]);
 
       if (result instanceof None) {
-        return new None<TValue>();
+        return new None();
       }
 
       entries.push([key, result]);
