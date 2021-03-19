@@ -1,8 +1,8 @@
 import { Some } from "./Some";
 import { None } from "./None";
-import { MaybeFactory } from "./types";
+import { ConstantValue, MaybeFactory } from "./types";
 
-export const maybeConstant = <TValue extends string | number>(
+export const maybeConstant = <TValue extends ConstantValue>(
   target: TValue
 ): MaybeFactory<TValue> => {
   return (value) => {

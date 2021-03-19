@@ -18,3 +18,5 @@ export type Schema<T extends { [key: string]: any }> = {
  * Extracts the type that a Schema represents
  */
 export type SchemaType<T> = T extends Schema<infer S> ? S : never;
+
+export type ConstantValue = string | number;

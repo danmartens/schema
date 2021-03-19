@@ -1,5 +1,6 @@
 {
-  "name": "transform",
+  "name": "schema",
+  "description": "Composable, type-safe data validation and normalization.",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
