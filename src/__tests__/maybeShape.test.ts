@@ -1,36 +1,36 @@
-import { maybeBoolean } from "../maybeBoolean";
-import { maybeShape } from "../maybeShape";
-import { maybeString } from "../maybeString";
-import { None } from "../None";
-import { Some } from "../Some";
+import { maybeBoolean } from '../maybeBoolean';
+import { maybeShape } from '../maybeShape';
+import { maybeString } from '../maybeString';
+import { None } from '../None';
+import { Some } from '../Some';
 
-test("maybeShape", () => {
+test('maybeShape', () => {
   const postSchema = maybeShape(
     {
       title: maybeString,
       published: maybeBoolean,
-      author: maybeShape({ name: maybeString }, { name: "Author" }),
+      author: maybeShape({ name: maybeString }, { name: 'Author' }),
     },
-    { name: "Post" }
+    { name: 'Post' },
   );
 
   const value = {
-    title: "Hello, World",
+    title: 'Hello, World',
     published: true,
-    author: { name: "Jane Doe" },
+    author: { name: 'Jane Doe' },
   };
 
   expect(postSchema(value)).toBeInstanceOf(Some);
 
   expect(postSchema(value).valueOf()).toEqual({
-    title: "Hello, World",
+    title: 'Hello, World',
     published: true,
     author: {
-      name: "Jane Doe",
+      name: 'Jane Doe',
     },
   });
 
-  expect(postSchema({ title: "Hello, World" })).toBeInstanceOf(None);
+  expect(postSchema({ title: 'Hello, World' })).toBeInstanceOf(None);
 
   expect(postSchema({ ...value, title: 42 })).toBeInstanceOf(None);
 

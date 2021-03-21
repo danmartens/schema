@@ -16,7 +16,7 @@ export class None {
   orThrow(): never {
     const message = this.message();
 
-    throw new Error(message ?? "Expected value to match Some<unknown>");
+    throw new Error(message ?? 'Expected value to match Some<unknown>');
   }
 
   orNull() {

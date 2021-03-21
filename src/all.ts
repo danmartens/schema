@@ -1,17 +1,17 @@
-import { Some } from "./Some";
-import { None } from "./None";
-import { Maybe } from "./types";
+import { Some } from './Some';
+import { None } from './None';
+import { Maybe } from './types';
 
 export function all<A>(values: [Maybe<A>]): Maybe<A>;
 
 export function all<A, B>(values: [Maybe<A>, Maybe<B>]): Maybe<[A, B]>;
 
 export function all<A, B, C>(
-  values: [Maybe<A>, Maybe<B>, Maybe<C>]
+  values: [Maybe<A>, Maybe<B>, Maybe<C>],
 ): Maybe<[A, B, C]>;
 
 export function all<A, B, C>(
-  values: [Maybe<A>] | [Maybe<A>, Maybe<B>] | [Maybe<A>, Maybe<B>, Maybe<C>]
+  values: [Maybe<A>] | [Maybe<A>, Maybe<B>] | [Maybe<A>, Maybe<B>, Maybe<C>],
 ): Maybe<[A]> | Maybe<[A, B]> | Maybe<[A, B, C]> {
   const result = [];
 

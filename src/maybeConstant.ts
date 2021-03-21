@@ -1,10 +1,10 @@
-import { Some } from "./Some";
-import { None } from "./None";
-import { ConstantValue, MaybeFactory } from "./types";
-import { validatorTypeNames } from "./validatorTypeNames";
+import { Some } from './Some';
+import { None } from './None';
+import { ConstantValue, MaybeFactory } from './types';
+import { validatorTypeNames } from './validatorTypeNames';
 
 export const maybeConstant = <TValue extends ConstantValue>(
-  target: TValue
+  target: TValue,
 ): MaybeFactory<TValue> => {
   const validator = (value: unknown) => {
     if (value === target) {

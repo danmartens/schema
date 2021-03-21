@@ -1,5 +1,5 @@
-import type { Some } from "./Some";
-import type { None } from "./None";
+import type { Some } from './Some';
+import type { None } from './None';
 
 export type Maybe<T> = Some<T> | None;
 
@@ -10,7 +10,7 @@ export type MaybeType<T> = T extends Some<infer V> ? V : never;
 
 export type MaybeFactory<T> = (
   value: unknown,
-  message?: (value: unknown) => string
+  message?: (value: unknown) => string,
 ) => Maybe<T>;
 
 export type Schema<T extends { [key: string]: any }> = {

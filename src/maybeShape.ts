@@ -1,8 +1,8 @@
-import { Some } from "./Some";
-import { None } from "./None";
-import { Schema, SchemaType, Maybe } from "./types";
-import { validationError } from "./validationError";
-import { validatorTypeNames } from "./validatorTypeNames";
+import { Some } from './Some';
+import { None } from './None';
+import { Schema, SchemaType, Maybe } from './types';
+import { validationError } from './validationError';
+import { validatorTypeNames } from './validatorTypeNames';
 
 interface Options {
   name?: string;
@@ -13,11 +13,11 @@ export const maybeShape = <
   TValue extends SchemaType<TSchema>
 >(
   schema: TSchema,
-  options?: Options
+  options?: Options,
 ) => {
   const validator = (value: any): Maybe<TValue> => {
-    if (value == null || typeof value !== "object") {
-      return new None(() => "Expected value to match Some<Object>");
+    if (value == null || typeof value !== 'object') {
+      return new None(() => 'Expected value to match Some<Object>');
     }
 
     const entries: [string, Some<unknown>][] = [];
@@ -27,7 +27,7 @@ export const maybeShape = <
 
       if (maybeValue instanceof None) {
         return new None(() =>
-          validationError([schema[key]], { object: options?.name, key })
+          validationError([schema[key]], { object: options?.name, key }),
         );
       }
 

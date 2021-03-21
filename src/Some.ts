@@ -1,5 +1,5 @@
-import { None } from "./None";
-import { Maybe } from "./types";
+import { None } from './None';
+import { Maybe } from './types';
 
 export class Some<T> {
   constructor(private value: T) {}

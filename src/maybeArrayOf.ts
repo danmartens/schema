@@ -1,9 +1,9 @@
-import { Some } from "./Some";
-import { None } from "./None";
-import { MaybeFactory } from "./types";
+import { Some } from './Some';
+import { None } from './None';
+import { MaybeFactory } from './types';
 
 export const maybeArrayOf = <TValue>(
-  maybeValue: MaybeFactory<TValue>
+  maybeValue: MaybeFactory<TValue>,
 ): MaybeFactory<TValue[]> => (value) => {
   if (!Array.isArray(value)) {
     return new None();

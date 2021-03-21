@@ -1,12 +1,12 @@
-import { Maybe, MaybeFactory } from "./types";
+import { Maybe, MaybeFactory } from './types';
 
 export const pure = <TValue>(
-  maybeValue: MaybeFactory<TValue>
+  maybeValue: MaybeFactory<TValue>,
 ): MaybeFactory<TValue> => {
   const cache = new WeakMap<any, Maybe<TValue>>();
 
   return (value: unknown) => {
-    if (value == null || typeof value !== "object") {
+    if (value == null || typeof value !== 'object') {
       return maybeValue(value);
     }
 

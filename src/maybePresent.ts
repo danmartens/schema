@@ -1,6 +1,6 @@
-import { Some } from "./Some";
-import { None } from "./None";
-import { Maybe } from "./types";
+import { Some } from './Some';
+import { None } from './None';
+import { Maybe } from './types';
 
 export function maybePresent<T>(value: T): Maybe<T> {
   if (isPresent(value)) {
@@ -15,7 +15,7 @@ const isPresent = (value: any): boolean => {
     return false;
   }
 
-  if (typeof value === "string") {
+  if (typeof value === 'string') {
     return /[^\s]+/.test(value);
   }
 
@@ -23,7 +23,7 @@ const isPresent = (value: any): boolean => {
     return value.length > 0;
   }
 
-  if (typeof value === "object") {
+  if (typeof value === 'object') {
     return Object.keys(value).length > 0;
   }
 

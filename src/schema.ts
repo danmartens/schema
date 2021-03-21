@@ -1,12 +1,12 @@
-import { Some } from "./Some";
-import { None } from "./None";
-import { maybeBoolean } from "./maybeBoolean";
-import { maybeNumber } from "./maybeNumber";
-import { maybeString } from "./maybeString";
-import { maybeArrayOf } from "./maybeArrayOf";
-import { maybeShape } from "./maybeShape";
-import { MaybeFactory } from "./types";
-import { nullable } from "./nullable";
+import { Some } from './Some';
+import { None } from './None';
+import { maybeBoolean } from './maybeBoolean';
+import { maybeNumber } from './maybeNumber';
+import { maybeString } from './maybeString';
+import { maybeArrayOf } from './maybeArrayOf';
+import { maybeShape } from './maybeShape';
+import { MaybeFactory } from './types';
+import { nullable } from './nullable';
 
 export const boolean = maybeBoolean;
 export const number = maybeNumber;
@@ -29,7 +29,7 @@ export namespace coercible {
       return new Some(value);
     }
 
-    if (typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.test(value)) {
+    if (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(value)) {
       return new Some(new Date(value));
     }
 
@@ -37,11 +37,11 @@ export namespace coercible {
   };
 
   export const number: MaybeFactory<number> = (value) => {
-    if (typeof value === "number") {
+    if (typeof value === 'number') {
       return new Some(value);
     }
 
-    if (typeof value === "string" && /^\d+(\.\d+)?$/.test(value)) {
+    if (typeof value === 'string' && /^\d+(\.\d+)?$/.test(value)) {
       return new Some(parseFloat(value));
     }
 
