@@ -1,4 +1,4 @@
-import { maybeBoolean } from '../maybeBoolean';
+import { maybeCoercibleDate } from '../maybeCoercibleDate';
 import { maybeShape } from '../maybeShape';
 import { maybeString } from '../maybeString';
 import { None } from '../None';
@@ -8,23 +8,23 @@ test('maybeShape', () => {
   const postSchema = maybeShape(
     {
       title: maybeString,
-      published: maybeBoolean,
+      publishedAt: maybeCoercibleDate,
       author: maybeShape({ name: maybeString }, { name: 'Author' }),
     },
     { name: 'Post' },
   );
 
-  const value = {
+  const valid = {
     title: 'Hello, World',
-    published: true,
+    publishedAt: '2020-01-01T00:00:00Z',
     author: { name: 'Jane Doe' },
   };
 
-  expect(postSchema(value)).toBeInstanceOf(Some);
+  expect(postSchema(valid)).toBeInstanceOf(Some);
 
-  expect(postSchema(value).valueOf()).toEqual({
+  expect(postSchema(valid).valueOf()).toEqual({
     title: 'Hello, World',
-    published: true,
+    publishedAt: new Date('2020-01-01T00:00:00Z'),
     author: {
       name: 'Jane Doe',
     },
@@ -32,17 +32,17 @@ test('maybeShape', () => {
 
   expect(postSchema({ title: 'Hello, World' })).toBeInstanceOf(None);
 
-  expect(postSchema({ ...value, title: 42 })).toBeInstanceOf(None);
+  expect(postSchema({ ...valid, title: 42 })).toBeInstanceOf(None);
 
   expect(() => {
     postSchema({ title: 42 }).orThrow();
   }).toThrowError('Expected value of "Post.title" to match Some<string>');
 
   expect(() => {
-    postSchema({ ...value, author: true }).orThrow();
+    postSchema({ ...valid, author: true }).orThrow();
   }).toThrowError('Expected value of "Post.author" to match Some<Author>');
 
   expect(() => {
-    postSchema({ ...value, author: { name: 42 } }).orThrow();
+    postSchema({ ...valid, author: { name: 42 } }).orThrow();
   }).toThrowError('Expected value of "Author.name" to match Some<String>');
 });
