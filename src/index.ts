@@ -36,3 +36,7 @@ export namespace coercible {
 }
 
 export { nullable, pure };
+
+export { Some } from './Some';
+export { None } from './None';
+export { Maybe } from './types';
