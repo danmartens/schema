@@ -4,7 +4,7 @@ import { Schema, SchemaType, Maybe } from './types';
 import { validationError } from './validationError';
 import { validatorTypeNames } from './validatorTypeNames';
 
-interface Options {
+export interface Options {
   name?: string;
 }
 
