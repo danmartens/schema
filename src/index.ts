@@ -6,10 +6,6 @@ import { maybeShape } from './maybeShape';
 import { maybeOneOfType } from './maybeOneOfType';
 import { maybeOneOf } from './maybeOneOf';
 import { maybeConstant } from './maybeConstant';
-import { maybeCoercibleNumber } from './maybeCoercibleNumber';
-import { maybeCoercibleDate } from './maybeCoercibleDate';
-import { nullable } from './nullable';
-import type { MaybeFactory } from './types';
 
 export const boolean = maybeBoolean;
 export const number = maybeNumber;
@@ -20,24 +16,13 @@ export const oneOfType = maybeOneOfType;
 export const oneOf = maybeOneOf;
 export const constant = maybeConstant;
 
-export namespace optional {
-  export const boolean = nullable(maybeBoolean);
-  export const number = nullable(maybeNumber);
-  export const string = nullable(maybeString);
-
-  export const arrayOf = <TValue>(factory: MaybeFactory<TValue>) =>
-    nullable(maybeArrayOf(factory));
-}
-
-export namespace coercible {
-  export const number = maybeCoercibleNumber;
-  export const date = maybeCoercibleDate;
-}
-
-export { nullable };
-
+export { nullable } from './nullable';
 export { pure } from './pure';
 export { validateShape } from './validateShape';
+
+export * as optional from './optional';
+export * as coercible from './coercible';
+export * as transform from './transform';
 
 export { Some } from './Some';
 export { None } from './None';
