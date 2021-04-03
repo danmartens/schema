@@ -1,5 +1,7 @@
 export class None {
-  constructor(private message: () => string | undefined = () => undefined) {}
+  constructor(private message: () => string | undefined = () => undefined) {
+    Object.freeze(this);
+  }
 
   map(): None {
     return this;

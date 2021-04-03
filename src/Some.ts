@@ -2,7 +2,9 @@ import { None } from './None';
 import { Maybe } from './types';
 
 export class Some<T> {
-  constructor(private value: T) {}
+  constructor(private value: T) {
+    Object.freeze(this);
+  }
 
   map<R>(callbackFn: (wrapped: T) => R): Maybe<R> {
     const result = callbackFn(this.value);

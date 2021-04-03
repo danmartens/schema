@@ -9,8 +9,7 @@ import { maybeConstant } from './maybeConstant';
 import { maybeCoercibleNumber } from './maybeCoercibleNumber';
 import { maybeCoercibleDate } from './maybeCoercibleDate';
 import { nullable } from './nullable';
-import { pure } from './pure';
-import { MaybeFactory } from './types';
+import type { MaybeFactory } from './types';
 
 export const boolean = maybeBoolean;
 export const number = maybeNumber;
@@ -35,8 +34,11 @@ export namespace coercible {
   export const date = maybeCoercibleDate;
 }
 
-export { nullable, pure };
+export { nullable };
+
+export { pure } from './pure';
+export { validateShape } from './validateShape';
 
 export { Some } from './Some';
 export { None } from './None';
-export { Maybe } from './types';
+export type { Maybe } from './types';
