@@ -11,8 +11,8 @@ export class None {
     return this;
   }
 
-  orValue<R>(value: R): R {
-    return value;
+  orValue<TValue>(value: TValue): TValue {
+    return value as TValue;
   }
 
   orThrow(): never {
@@ -21,11 +21,11 @@ export class None {
     throw new Error(message ?? 'Expected value to match Some<unknown>');
   }
 
-  orNull() {
-    return null;
-  }
-
   valueOf() {
     return undefined;
+  }
+
+  toString() {
+    return 'None';
   }
 }

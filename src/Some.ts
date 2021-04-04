@@ -1,12 +1,12 @@
 import { None } from './None';
 import { Maybe } from './types';
 
-export class Some<T> {
-  constructor(private value: T) {
+export class Some<TValue> {
+  constructor(private value: TValue) {
     Object.freeze(this);
   }
 
-  map<R>(callbackFn: (wrapped: T) => R): Maybe<R> {
+  map<TMapped>(callbackFn: (wrapped: TValue) => TMapped): Maybe<TMapped> {
     const result = callbackFn(this.value);
 
     if (result != null) {
@@ -16,27 +16,29 @@ export class Some<T> {
     }
   }
 
-  flatMap<R>(callbackFn: (wrapped: T) => Maybe<R>) {
+  flatMap<TMapped>(callbackFn: (wrapped: TValue) => Maybe<TMapped>) {
     return callbackFn(this.value);
   }
 
-  orValue(): T {
+  orValue(): TValue {
     return this.value;
   }
 
-  orNull(): T {
+  orThrow(): TValue {
     return this.value;
   }
 
-  orThrow(): T {
-    return this.value;
-  }
-
-  valueOf(): T {
+  valueOf(): TValue {
     return this.value;
   }
 
   toString() {
-    return `Some(${this.value})`;
+    const value = this.value as unknown;
+
+    if (typeof value === 'object' && value?.constructor?.name != null) {
+      return `Some<${value.constructor.name}>`;
+    }
+
+    return `Some<${typeof value}>`;
   }
 }

@@ -1,4 +1,3 @@
-import { upperCase } from '../transform';
 import { maybeOneOf } from '../maybeOneOf';
 
 test('maybeOneOf', () => {
