@@ -1,5 +1,8 @@
+import lodashCamelCase from 'lodash.camelcase';
+import lodashSnakeCase from 'lodash.snakecase';
 import { Some } from './Some';
-import { MaybeFactory } from './types';
+import { None } from './None';
+import { Maybe, MaybeFactory } from './types';
 
 export const upperCase = (factory: MaybeFactory<string>) => {
   return (value: unknown) => {
@@ -25,42 +28,48 @@ export const lowerCase = (factory: MaybeFactory<string>) => {
   };
 };
 
-export const snakeCase = (factory: MaybeFactory<string>) => {
+export const camelCase = (factory: MaybeFactory<string>) => {
   return (value: unknown) => {
     const maybe = factory(value);
 
     if (maybe instanceof Some) {
-      return maybe.map((value) =>
-        value
-          .replace(/([A-Z]+)/g, '_$&')
-          .toLowerCase()
-          .replace(/[^a-z0-9]+/g, '_')
-          .replace(/(^_|_$)/g, ''),
-      );
+      return maybe.map(lodashCamelCase);
     }
 
     return maybe;
   };
 };
 
-export const camelCase = (factory: MaybeFactory<string>) => {
+export const snakeCase = (factory: MaybeFactory<string>) => {
   return (value: unknown) => {
     const maybe = factory(value);
 
     if (maybe instanceof Some) {
-      return maybe.map((value) =>
-        value
-          .replace(/^[^a-z0-9]+/i, '')
-          .split(/[^a-z0-9]+/i)
-          .map((word, index) =>
-            index === 0
-              ? word
-              : word.substr(0, 1).toUpperCase() + word.substr(1),
-          )
-          .join(''),
-      );
+      return maybe.map(lodashSnakeCase);
     }
 
     return maybe;
   };
+};
+
+export const mapValue = <
+  TValueMap extends Record<string, unknown>,
+  TKey extends keyof TValueMap
+>(
+  valueMap: TValueMap,
+) => (value: unknown): Maybe<TValueMap[TKey]> => {
+  const message = () =>
+    `Expected value to match Some<${Object.keys(valueMap)
+      .map((key) => `"${key}"`)
+      .join(' | ')}>`;
+
+  if (typeof value !== 'string') {
+    return new None(message);
+  }
+
+  if (value in valueMap) {
+    return new Some(valueMap[value] as TValueMap[TKey]);
+  }
+
+  return new None(message);
 };

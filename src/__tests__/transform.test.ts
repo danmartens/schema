@@ -1,4 +1,10 @@
-import { lowerCase, upperCase, snakeCase, camelCase } from '../transform';
+import {
+  lowerCase,
+  upperCase,
+  snakeCase,
+  camelCase,
+  mapValue,
+} from '../transform';
 import { maybeString } from '../maybeString';
 
 test('upperCase', () => {
@@ -18,18 +24,6 @@ test('snakeCase', () => {
     'hello_world',
   );
 
-  expect(snakeCase(maybeString)('helloWorld').valueOf()).toEqual('hello_world');
-
-  expect(snakeCase(maybeString)('_helloWorld_').valueOf()).toEqual(
-    'hello_world',
-  );
-
-  expect(snakeCase(maybeString)('HELLO WORLD').valueOf()).toEqual(
-    'hello_world',
-  );
-
-  expect(snakeCase(maybeString)('helloWORLD').valueOf()).toEqual('hello_world');
-
   expect(upperCase(snakeCase(maybeString))('hello world').valueOf()).toEqual(
     'HELLO_WORLD',
   );
@@ -37,14 +31,14 @@ test('snakeCase', () => {
 
 test('camelCase', () => {
   expect(camelCase(maybeString)('hello world').valueOf()).toEqual('helloWorld');
+});
 
-  expect(camelCase(maybeString)('hello-world').valueOf()).toEqual('helloWorld');
+test('mapValue', () => {
+  expect(
+    mapValue({ pending: 'PENDING', complete: 'COMPLETE' })('pending').valueOf(),
+  ).toEqual('PENDING');
 
-  expect(camelCase(maybeString)('hello_world').valueOf()).toEqual('helloWorld');
-
-  expect(camelCase(maybeString)('__hello_world__').valueOf()).toEqual(
-    'helloWorld',
-  );
-
-  expect(camelCase(maybeString)('helloWorld').valueOf()).toEqual('helloWorld');
+  expect(() => {
+    mapValue({ pending: 'PENDING', complete: 'COMPLETE' })('invalid').orThrow();
+  }).toThrowError('Expected value to match Some<"pending" | "complete">');
 });
