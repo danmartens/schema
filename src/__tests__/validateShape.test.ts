@@ -4,11 +4,16 @@ import { maybeString } from '../maybeString';
 import { maybeNumber } from '../maybeNumber';
 
 test('validateShape', () => {
-  const validator = validateShape({
-    firstName: maybeString,
-    lastName: maybeString,
-    age: nullable(maybeNumber),
-  });
+  const validator = validateShape(
+    {
+      firstName: maybeString,
+      lastName: maybeString,
+      age: nullable(maybeNumber),
+    },
+    {
+      messages: { age: 'Age is invalid' },
+    },
+  );
 
   expect(validator({ firstName: 'Jane', lastName: 'Doe', age: 42 })).toEqual(
     {},
@@ -25,6 +30,6 @@ test('validateShape', () => {
   });
 
   expect(validator({ firstName: 'Jane', lastName: 'Doe', age: true })).toEqual({
-    age: 'This field is invalid',
+    age: 'Age is invalid',
   });
 });
