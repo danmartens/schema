@@ -20,7 +20,7 @@ export function all<A, B, C>(
       return value;
     }
 
-    result.push(value.orNull());
+    result.push(value.valueOf());
   }
 
   return new Some(result) as Some<[A]> | Some<[A, B]> | Some<[A, B, C]>;
