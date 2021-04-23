@@ -63,7 +63,7 @@ square(new None())   // => Error: Expected value to match Some
 
 ### Validators
 
-A `Validator` is a function which accepts a value and returns either `Some` or `None`. For example, a number validator would have the following type signature:
+A Validator is a function which accepts a value and returns either `Some` or `None`. For example, a number Validator would have the following type signature:
  
 ```typescript
 (unknown) => Some<number> | None
@@ -75,7 +75,7 @@ Which can be simplified to:
 (unknown) => Maybe<number>
 ```
 
-An implementation of the number validator would look something like this:
+An implementation of the number Validator would look something like this:
 
 ```typescript
 const maybeNumber = (value: unknown): Maybe<number> => {
@@ -89,13 +89,13 @@ const maybeNumber = (value: unknown): Maybe<number> => {
 
 ### Transformers
 
-A Transformer is a function which accepts a Validator and returns a new Validator. Transformers can be used to normalize data before it is validated. For example, a transformer that converts a string to uppercase would have the following type signature:
+A Transformer is a function which accepts a Validator and returns a new Validator. Transformers can be used to normalize data before it is validated. For example, a Transformer that converts a string to uppercase would have the following signature:
 
 ```typescript
 (Validator<string>) => Validator<string>
 ```
 
-The implementation for this Transformer would look something like this:
+The implementation for this `Transformer` would look something like this:
 
 ```typescript
 const uppercase = (validate: Validator<string>) => (value: unknown) => {
@@ -120,7 +120,7 @@ const uppercase = (validate: Validator<string>) =>
 
 ### Schemas
 
-Schemas are objects whose values are `Validator`s. They’re used to validate more complex data. A schema for validating blog post data might look something like this:
+Schemas are objects whose values are Validators. They’re used to validate more complex data. A schema for validating blog post data might look something like this:
 
 ```typescript
 const postSchema = {
