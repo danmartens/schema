@@ -20,7 +20,7 @@ For example, a value that we expect to be a number would be represented as `Some
 new Some(42).valueOf() // => 42
 ```
 
-While `None#valueOf()` always returns `undefined`
+While `None#valueOf()` always returns `undefined`:
 
 ```typescript
 new None().valueOf() // => undefined
