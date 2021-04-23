@@ -118,6 +118,16 @@ const uppercase = (validate: Validator<string>) =>
   );
 ```
 
+This Transformer could be used with the built-in `maybeOneOf()` Validator to create a case-insensitive enum Validator:
+
+```typescript
+const maybeOrderStatus = uppercase(maybeOneOf('PENDING', 'COMPLETE', 'SHIPPED'));
+
+maybeOrderStatus('COMPLETE').orThrow(); // => 'COMPLETE'
+maybeOrderStatus('complete').orThrow(); // => 'COMPLETE'
+maybeOrderStatus('invalid').orThrow(); // => Error: Expected value to match Some<'PENDING' | 'COMPLETE' | 'SHIPPED'>
+```
+
 ### Schemas
 
 Schemas are objects whose values are Validators. They’re used to validate more complex data. A schema for validating blog post data might look something like this:
