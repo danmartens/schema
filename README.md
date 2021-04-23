@@ -30,7 +30,7 @@ This can combined with the nullish-coalescing operator (`??`) to provide default
 
 ```typescript
 new Some(42).valueOf() ?? 0  // => 42
-new None().valueOf() ?? 0    // => 0
+new None().valueOf() ?? 0 // => 0
 ```
 
 ##### Maybe#orThrow()
@@ -57,7 +57,7 @@ const square = (maybe: Maybe<number>): number => {
 }
 
 square(new Some(42)) // => 1764
-square(new None())   // => Error: Expected value to match Some
+square(new None()) // => Error: Expected value to match Some
 ```
 
 
@@ -107,7 +107,7 @@ const uppercase = (validate: Validator<string>) => (value: unknown) => {
 };
 ```
 
-We can simplify the implementation by using the built in `maybeString()` Validator and the `flatMap()` monad method:
+We can simplify the implementation by using the built-in `maybeString()` Validator and the `flatMap()` monad method:
 
 ```typescript
 const uppercase = (validate: Validator<string>) =>
@@ -141,4 +141,18 @@ maybePost({ title: 'Hello, world!', published: 'yes' }).valueOf() // => undefine
 maybePost({ title: 'Hello, world!' }).valueOf() // => undefined
 
 maybePost(42).valueOf() // => undefined
+```
+
+They can also be used with the `validate()` function to provide validation errors messages for each invalid or missing value:
+
+```typescript
+const validatePost = validate(postSchema);
+
+validatePost({ title: 'Hello, world!', published: true }) // => {}
+
+validatePost({ title: 'Hello, world!', published: 'yes' }) // => { published: 'This field is invalid' }
+
+validatePost({ title: 'Hello, world!' }) // => { published: 'This field is invalid' }
+
+validatePost(42) // => { title: 'This field is invalid', published: 'This field is invalid' }
 ```
