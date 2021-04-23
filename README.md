@@ -95,7 +95,7 @@ A Transformer is a function which accepts a Validator and returns a new Validato
 (Validator<string>) => Validator<string>
 ```
 
-The implementation for this `Transformer` would look something like this:
+The implementation for this Transformer would look something like this:
 
 ```typescript
 const uppercase = (validate: Validator<string>) => (value: unknown) => {
