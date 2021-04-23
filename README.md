@@ -79,7 +79,7 @@ An implementation of the number validator would look something like this:
 
 ```typescript
 const maybeNumber = (value: unknown): Maybe<number> => {
-  if (typeof value !== ‘number’) {
+  if (typeof value !== 'number') {
     return new None();
   }
 
@@ -99,7 +99,7 @@ The implementation for this Transformer would look something like this:
 
 ```typescript
 const uppercase = (validate: Validator<string>) => (value: unknown) => {
-  if (typeof value !== ‘string’) {
+  if (typeof value !== 'string') {
     return new None();
   }
 
@@ -116,7 +116,6 @@ const uppercase = (validate: Validator<string>) =>
       stringValue.toUpperCase()
     )
   );
-}
 ```
 
 ### Schemas
@@ -135,11 +134,11 @@ Schemas can be used with the built-in `maybeShape()` validator:
 ```typescript
 const maybePost = maybeShape(postSchema);
 
-maybePost({ title: ‘Hello, world!’, published: true }).valueOf() // => { title: ‘Hello, world!’, published: true }
+maybePost({ title: 'Hello, world!', published: true }).valueOf() // => { title: 'Hello, world!', published: true }
 
-maybePost({ title: ’Hello, world!’, published: ‘yes’ }).valueOf() // => undefined
+maybePost({ title: 'Hello, world!', published: 'yes' }).valueOf() // => undefined
 
-maybePost({ title: ‘Hello, world!’ }).valueOf() // => undefined
+maybePost({ title: 'Hello, world!' }).valueOf() // => undefined
 
 maybePost(42).valueOf() // => undefined
 ```
