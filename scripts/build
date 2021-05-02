@@ -1,0 +1,7 @@
+set -ex
+
+rm -rf lib
+
+yarn run rollup -c
+
+rm -rf lib/__tests__

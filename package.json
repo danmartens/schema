@@ -2,10 +2,15 @@
   "name": "schema",
   "description": "Composable, type-safe data validation and normalization",
   "version": "1.0.0",
-  "main": "index.js",
+  "type": "module",
+  "module": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
   "license": "MIT",
   "scripts": {
-    "build": "tsc",
+    "build": "scripts/build",
     "test": "jest",
     "test:watch": "jest --watch",
     "types:check": "tsc --noEmit",
@@ -16,6 +21,8 @@
     "@babel/core": "^7.13.10",
     "@babel/preset-env": "^7.13.10",
     "@babel/preset-typescript": "^7.13.0",
+    "@rollup/plugin-commonjs": "^18.0.0",
+    "@rollup/plugin-typescript": "^8.2.1",
     "@types/jest": "^26.0.21",
     "@types/lodash.camelcase": "^4.3.6",
     "@types/lodash.snakecase": "^4.1.6",
@@ -25,6 +32,8 @@
     "eslint": "^7.22.0",
     "jest": "^26.6.3",
     "prettier": "^2.2.1",
+    "rollup": "^2.44.0",
+    "tslib": "^2.2.0",
     "typescript": "^4.2.3"
   },
   "dependencies": {
