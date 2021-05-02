@@ -5,7 +5,7 @@ interface Options<TValue> {
   messages?: Partial<{ [K in keyof TValue]: string }>;
 }
 
-export const validateShape = <
+export const validate = <
   TSchema extends Schema<{ [key: string]: any }>,
   TValue extends SchemaType<TSchema>
 >(

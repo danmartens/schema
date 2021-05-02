@@ -1,5 +1,57 @@
 # Schema
 
+## Examples
+
+### Validating `fetch()` Responses
+
+```typescript
+import { schema } from 'schema';
+
+const maybePost = schema.shape({
+  title: schema.string,
+  content: schema.string,
+  published: schema.boolean,
+  author: schema.nullable(
+    schema.shape({
+      name: schema.string,
+    }),
+  ),
+});
+
+const fetchPost = (id: number) =>
+  fetch(`/api/posts/${id}`)
+    .then((response) => response.json())
+    .then((response) => maybePost(response).orThrow());
+```
+
+### Validating Formik Forms
+
+```jsx
+import { Formik } from 'formik';
+import { schema, validate } from 'schema';
+
+const formSchema = {
+  firstName: schema.string,
+  lastName: schema.string,
+  birthday: schema.nullable(schema.coercible.date),
+};
+
+const RegistrationForm = () => {
+  return (
+    <Formik
+      initialValues={{
+        firstName: '',
+        lastName: '',
+        birthday: '',
+      }}
+      validate={(values) => validate(formSchema)(values)}
+    >
+      {({ handleSubmit }) => <form onSubmit={handleSubmit}>{/* ... */}</form>}
+    </Formik>
+  );
+};
+```
+
 ## Basic Concepts
 
 ### Some, None, and Maybe
@@ -17,20 +69,20 @@ For example, a value that we expect to be a number would be represented as `Some
 `Some#valueOf()` returns the contained value:
 
 ```typescript
-new Some(42).valueOf() // => 42
+new Some(42).valueOf(); // => 42
 ```
 
 While `None#valueOf()` always returns `undefined`:
 
 ```typescript
-new None().valueOf() // => undefined
+new None().valueOf(); // => undefined
 ```
 
 This can combined with the nullish-coalescing operator (`??`) to provide default values:
 
 ```typescript
-new Some(42).valueOf() ?? 0  // => 42
-new None().valueOf() ?? 0 // => 0
+new Some(42).valueOf() ?? 0; // => 42
+new None().valueOf() ?? 0; // => 0
 ```
 
 ##### Maybe#orThrow()
@@ -38,13 +90,13 @@ new None().valueOf() ?? 0 // => 0
 `Some#orThrow()` behaves exactly like `Some#valueOf()`:
 
 ```typescript
-new Some(42).orThrow() // => 42
+new Some(42).orThrow(); // => 42
 ```
 
 While `None#orThrow()` always throws an `Error`:
 
 ```typescript
-new None().orThrow() // Error: Expected value to match Some
+new None().orThrow(); // Error: Expected value to match Some
 ```
 
 This is useful for situations where a default value does not make sense:
@@ -52,19 +104,18 @@ This is useful for situations where a default value does not make sense:
 ```typescript
 const square = (maybe: Maybe<number>): number => {
   const value = maybe.orThrow();
-  
+
   return value * value;
-}
+};
 
-square(new Some(42)) // => 1764
-square(new None()) // => Error: Expected value to match Some
+square(new Some(42)); // => 1764
+square(new None()); // => Error: Expected value to match Some
 ```
-
 
 ### Validators
 
 A Validator is a function which accepts a value and returns either `Some` or `None`. For example, a number Validator would have the following type signature:
- 
+
 ```typescript
 (unknown) => Some<number> | None
 ```
@@ -84,7 +135,7 @@ const maybeNumber = (value: unknown): Maybe<number> => {
   }
 
   return new Some(value);
-}
+};
 ```
 
 ### Transformers
@@ -110,18 +161,18 @@ const uppercase = (validate: Validator<string>) => (value: unknown) => {
 We can simplify the implementation by using the built-in `maybeString()` Validator and the `flatMap()` monad method:
 
 ```typescript
-const uppercase = (validate: Validator<string>) =>
-  (value: unknown) => maybeString(value).flatMap(
-    (stringValue) => validate(
-      stringValue.toUpperCase()
-    )
+const uppercase = (validate: Validator<string>) => (value: unknown) =>
+  maybeString(value).flatMap((stringValue) =>
+    validate(stringValue.toUpperCase()),
   );
 ```
 
 This Transformer could be used with the built-in `maybeOneOf()` Validator to create a case-insensitive enum Validator:
 
 ```typescript
-const maybeOrderStatus = uppercase(maybeOneOf('PENDING', 'COMPLETE', 'SHIPPED'));
+const maybeOrderStatus = uppercase(
+  maybeOneOf('PENDING', 'COMPLETE', 'SHIPPED'),
+);
 
 maybeOrderStatus('COMPLETE').orThrow(); // => 'COMPLETE'
 maybeOrderStatus('complete').orThrow(); // => 'COMPLETE'
@@ -136,7 +187,7 @@ Schemas are objects whose values are Validators. They’re used to validate more
 const postSchema = {
   title: maybeString,
   published: maybeBoolean,
-}
+};
 ```
 
 Schemas can be used with the built-in `maybeShape()` validator:
@@ -144,13 +195,13 @@ Schemas can be used with the built-in `maybeShape()` validator:
 ```typescript
 const maybePost = maybeShape(postSchema);
 
-maybePost({ title: 'Hello, world!', published: true }).valueOf() // => { title: 'Hello, world!', published: true }
+maybePost({ title: 'Hello, world!', published: true }).valueOf(); // => { title: 'Hello, world!', published: true }
 
-maybePost({ title: 'Hello, world!', published: 'yes' }).valueOf() // => undefined
+maybePost({ title: 'Hello, world!', published: 'yes' }).valueOf(); // => undefined
 
-maybePost({ title: 'Hello, world!' }).valueOf() // => undefined
+maybePost({ title: 'Hello, world!' }).valueOf(); // => undefined
 
-maybePost(42).valueOf() // => undefined
+maybePost(42).valueOf(); // => undefined
 ```
 
 They can also be used with the `validate()` function to provide validation errors messages for each invalid or missing value:
@@ -158,11 +209,11 @@ They can also be used with the `validate()` function to provide validation error
 ```typescript
 const validatePost = validate(postSchema);
 
-validatePost({ title: 'Hello, world!', published: true }) // => {}
+validatePost({ title: 'Hello, world!', published: true }); // => {}
 
-validatePost({ title: 'Hello, world!', published: 'yes' }) // => { published: 'This field is invalid' }
+validatePost({ title: 'Hello, world!', published: 'yes' }); // => { published: 'This field is invalid' }
 
-validatePost({ title: 'Hello, world!' }) // => { published: 'This field is invalid' }
+validatePost({ title: 'Hello, world!' }); // => { published: 'This field is invalid' }
 
-validatePost(42) // => { title: 'This field is invalid', published: 'This field is invalid' }
+validatePost(42); // => { title: 'This field is invalid', published: 'This field is invalid' }
 ```
