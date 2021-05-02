@@ -1,10 +1,10 @@
-import { validateShape } from '../validateShape';
+import { validate } from '../validate';
 import { nullable } from '../nullable';
 import { maybeString } from '../maybeString';
 import { maybeNumber } from '../maybeNumber';
 
-test('validateShape', () => {
-  const validator = validateShape(
+test('validate', () => {
+  const validator = validate(
     {
       firstName: maybeString,
       lastName: maybeString,
